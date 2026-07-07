@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio de Ciberseguridad | Evaluación de Controles de Acceso</title>
+    <meta name="description" content="Informe ejecutivo de ciberseguridad: Evaluación de vulnerabilidades y análisis de controles de acceso basado en NIST SP 800-30 Rev.1.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           DESIGN TOKENS & RESET
+        ============================================ */
+        :root {
+            --bg-base: #060a14;
+            --bg-card: #0d1424;
+            --bg-card-hover: #111d30;
+            --bg-surface: #0a1020;
+            --text-primary: #e2e8f0;
+            --text-secondary: #8892a4;
+            --text-muted: #4a5568;
+            --accent-orange: #ff5e00;
+            --accent-orange-dim: rgba(255, 94, 0, 0.12);
+            --accent-orange-border: rgba(255, 94, 0, 0.35);
+            --accent-orange-glow: rgba(255, 94, 0, 0.4);
+            --accent-blue: #3b82f6;
+            --accent-blue-dim: rgba(59, 130, 246, 0.12);
+            --accent-teal: #14b8a6;
+            --accent-teal-dim: rgba(20, 184, 166, 0.12);
+            --accent-yellow: #f59e0b;
+            --accent-yellow-dim: rgba(245, 158, 11, 0.12);
+            --accent-red: #ef4444;
+            --accent-red-dim: rgba(239, 68, 68, 0.12);
+            --accent-green: #22c55e;
+            --accent-green-dim: rgba(34, 197, 94, 0.12);
+            --border-color: #1a2540;
+            --border-subtle: #111827;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND */
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,94,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,94,0,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .bg-orb {
+            position: fixed; width: 600px; height: 600px;
+            border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0;
+        }
+        .orb-1 {
+            background: radial-gradient(circle, rgba(255,94,0,0.07) 0%, transparent 70%);
+            top: -200px; right: -100px;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+        .orb-2 {
+            background: radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%);
+            bottom: -200px; left: -100px;
+            animation: float 20s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes float {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(40px, 30px) scale(1.1); }
+        }
+
+        /* LAYOUT */
+        .page-wrapper {
+            position: relative; z-index: 1;
+            max-width: 980px; margin: 0 auto;
+            padding: 3rem 1.5rem 5rem;
+        }
+
+        /* NAV */
+        .nav-bar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(6,10,20,0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.85rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-weight: 700; font-size: 0.95rem; color: var(--text-primary);
+            text-decoration: none;
+        }
+        .nav-shield {
+            width: 28px; height: 28px;
+            background: var(--accent-orange-dim);
+            border: 1px solid var(--accent-orange-border);
+            border-radius: 6px; display: flex; align-items: center;
+            justify-content: center; font-size: 14px;
+        }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent-orange); }
+        .nav-badge {
+            background: var(--accent-orange-dim);
+            border: 1px solid var(--accent-orange-border);
+            color: var(--accent-orange);
+            font-size: 0.75rem; font-weight: 600;
+            padding: 0.2rem 0.6rem; border-radius: 9999px;
+        }
+
+        /* HERO */
+        .hero { padding: 3.5rem 0 2.5rem; }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--accent-orange-dim);
+            border: 1px solid var(--accent-orange-border);
+            border-radius: 9999px; padding: 0.3rem 0.9rem;
+            font-size: 0.78rem; font-weight: 600; color: var(--accent-orange);
+            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem;
+        }
+        .hero-eyebrow::before {
+            content: ''; width: 6px; height: 6px;
+            background: var(--accent-orange); border-radius: 50%;
+            box-shadow: 0 0 6px var(--accent-orange);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.6; transform: scale(0.8); }
+        }
+        h1.hero-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800;
+            line-height: 1.15; color: #fff; margin-bottom: 1rem; letter-spacing: -0.02em;
+        }
+        h1.hero-title span {
+            background: linear-gradient(135deg, #ff5e00 0%, #ff9500 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-desc {
+            color: var(--text-secondary); font-size: 1rem;
+            max-width: 640px; margin-bottom: 2rem;
+        }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .meta-chip {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 6px; padding: 0.4rem 0.85rem;
+            font-size: 0.82rem; color: var(--text-secondary);
+        }
+        .meta-chip .chip-label {
+            color: var(--text-muted); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .meta-chip strong { color: var(--text-primary); font-weight: 600; }
+
+        /* STATS */
+        .stats-strip {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;
+        }
+        .stat-item {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 1.25rem; text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stat-item:hover { transform: translateY(-3px); border-color: rgba(255,94,0,0.25); }
+        .stat-value {
+            font-size: 2rem; font-weight: 800; font-family: var(--font-mono);
+            line-height: 1; margin-bottom: 0.35rem;
+        }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 600; }
+        .stat-item.critical .stat-value { color: var(--accent-orange); }
+        .stat-item.high     .stat-value { color: var(--accent-yellow); }
+        .stat-item.medium   .stat-value { color: #60a5fa; }
+        .stat-item.total    .stat-value { color: var(--text-primary); }
+
+        /* SECTION DIVIDER */
+        .divider {
+            display: flex; align-items: center; gap: 1rem; margin: 2.5rem 0;
+        }
+        .divider::before, .divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+        .divider-label {
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--text-muted); white-space: nowrap; font-weight: 600;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 2rem 2.25rem; margin-bottom: 1.5rem;
+            position: relative; overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(255,94,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+        .card:hover::before { opacity: 1; }
+        .card-num {
+            position: absolute; top: 1.5rem; right: 2rem;
+            font-family: var(--font-mono); font-size: 3.5rem; font-weight: 800;
+            color: rgba(255,255,255,0.025); line-height: 1;
+            pointer-events: none; user-select: none;
+        }
+        .card-header {
+            display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem;
+        }
+        .card-icon {
+            width: 40px; height: 40px; min-width: 40px;
+            background: var(--accent-orange-dim); border: 1px solid var(--accent-orange-border);
+            border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px;
+        }
+        h2.card-title {
+            color: var(--accent-orange); font-size: 0.78rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.2rem;
+        }
+        h3.card-subtitle { color: #fff; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; }
+        p.card-text {
+            color: var(--text-secondary); font-size: 0.95rem;
+            margin-bottom: 0.85rem; text-align: justify;
+        }
+        p.card-text:last-child { margin-bottom: 0; }
+
+        /* HIGHLIGHT BOXES */
+        .hbox {
+            border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
+            font-size: 0.9rem; color: var(--text-primary);
+        }
+        .hbox-label {
+            display: block; margin-bottom: 0.3rem;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700;
+        }
+        .hbox-orange { background: var(--accent-orange-dim); border: 1px solid var(--accent-orange-border); }
+        .hbox-orange .hbox-label { color: var(--accent-orange); }
+        .hbox-blue   { background: var(--accent-blue-dim);   border: 1px solid rgba(59,130,246,0.3); }
+        .hbox-blue   .hbox-label { color: var(--accent-blue); }
+        .hbox-red    { background: var(--accent-red-dim);    border: 1px solid rgba(239,68,68,0.3); }
+        .hbox-red    .hbox-label { color: var(--accent-red); }
+        .hbox-yellow { background: var(--accent-yellow-dim); border: 1px solid rgba(245,158,11,0.3); }
+        .hbox-yellow .hbox-label { color: var(--accent-yellow); }
+
+        /* TAGS */
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+        .tag {
+            font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border-color);
+            border-radius: 6px; padding: 0.2rem 0.6rem; font-family: var(--font-mono);
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            padding: 0.3rem 0.75rem; border-radius: 9999px;
+            font-weight: 700; font-size: 0.78rem; white-space: nowrap;
+        }
+        .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+        .badge-critical { background: rgba(255,94,0,0.15); color: var(--accent-orange); border: 1px solid rgba(255,94,0,0.4); box-shadow: 0 0 12px rgba(255,94,0,0.2); }
+        .badge-critical::before { background: var(--accent-orange); box-shadow: 0 0 4px var(--accent-orange); }
+        .badge-high   { background: rgba(245,158,11,0.15); color: var(--accent-yellow); border: 1px solid rgba(245,158,11,0.35); }
+        .badge-high::before { background: var(--accent-yellow); }
+        .badge-medium { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.35); }
+        .badge-medium::before { background: #60a5fa; }
+        .badge-ok     { background: rgba(34,197,94,0.15); color: var(--accent-green); border: 1px solid rgba(34,197,94,0.3); }
+        .badge-ok::before { background: var(--accent-green); }
+        .badge-info   { background: var(--accent-teal-dim); color: var(--accent-teal); border: 1px solid rgba(20,184,166,0.3); }
+        .badge-info::before { background: var(--accent-teal); }
+
+        /* TABLES */
+        .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border-color); margin-top: 1.25rem; }
+        table { width: 100%; border-collapse: collapse; background: var(--bg-surface); font-size: 0.88rem; }
+        thead th {
+            background: #0a1628; color: var(--text-secondary);
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 0.9rem 1.1rem;
+            border-bottom: 1px solid var(--border-color); white-space: nowrap;
+        }
+        tbody td { padding: 1rem 1.1rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); vertical-align: middle; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr { transition: background 0.2s; }
+        tbody tr:hover { background: rgba(255,255,255,0.02); }
+        td.td-mono { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; text-align: center; }
+        .c-orange { color: var(--accent-orange); }
+        .c-yellow { color: var(--accent-yellow); }
+        .c-blue   { color: #60a5fa; }
+        code {
+            font-family: var(--font-mono); background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border-color); border-radius: 4px;
+            padding: 0.1rem 0.4rem; font-size: 0.8rem; color: #93c5fd;
+        }
+
+        /* TIMELINE */
+        .timeline { position: relative; padding-left: 1.5rem; margin-top: 1rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 6px; top: 0; bottom: 0;
+            width: 1px; background: linear-gradient(to bottom, var(--accent-orange), transparent);
+        }
+        .tl-item {
+            position: relative; margin-bottom: 1.25rem;
+            padding: 1rem 1.25rem; background: var(--bg-surface);
+            border: 1px solid var(--border-color); border-radius: 10px;
+            transition: border-color 0.2s;
+        }
+        .tl-item:hover { border-color: rgba(255,94,0,0.25); }
+        .tl-item::before {
+            content: ''; position: absolute; left: -1.75rem; top: 1rem;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--accent-orange); border: 2px solid var(--bg-base);
+            box-shadow: 0 0 8px var(--accent-orange-glow);
+        }
+        .tl-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+        .tl-time { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-orange); font-weight: 500; }
+        .tl-event { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+        .tl-detail { font-size: 0.83rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        /* FINDINGS */
+        .finding {
+            display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: flex-start;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin-bottom: 0.85rem;
+        }
+        .finding.orange { border-left: 3px solid var(--accent-orange); }
+        .finding.red    { border-left: 3px solid var(--accent-red); }
+        .finding.blue   { border-left: 3px solid var(--accent-blue); }
+        .finding.yellow { border-left: 3px solid var(--accent-yellow); }
+        .finding-icon { font-size: 1.2rem; margin-top: 2px; }
+        .finding-title { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+        .finding-desc  { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* WORKSHEET */
+        .worksheet { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+        @media (max-width: 700px) { .worksheet { grid-template-columns: 1fr; } }
+        .ws-col { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .ws-head { padding: 0.75rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border-color); }
+        .ws-head.notes  { color: var(--accent-blue);  background: rgba(59,130,246,0.07); }
+        .ws-head.issues { color: var(--accent-yellow); background: rgba(245,158,11,0.07); }
+        .ws-head.recs   { color: var(--accent-green);  background: rgba(34,197,94,0.07); }
+        .ws-body { padding: 1rem; }
+        .ws-item { display: flex; gap: 0.6rem; margin-bottom: 0.85rem; font-size: 0.85rem; color: var(--text-secondary); align-items: flex-start; }
+        .ws-item:last-child { margin-bottom: 0; }
+        .ws-num { font-size: 0.9rem; margin-top: 1px; }
+
+        /* REMEDIATION LIST */
+        .rem-list { list-style: none; padding: 0; margin-top: 1rem; }
+        .rem-item {
+            display: flex; gap: 1rem; padding: 1.1rem 1.25rem;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 10px; margin-bottom: 0.85rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .rem-item:hover { border-color: rgba(255,94,0,0.2); transform: translateX(4px); }
+        .rem-num {
+            min-width: 28px; height: 28px;
+            background: var(--accent-orange-dim); border: 1px solid var(--accent-orange-border);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700; color: var(--accent-orange); margin-top: 2px;
+        }
+        .rem-title { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+        .rem-desc  { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.6; }
+        .rem-priority { margin-left: auto; min-width: fit-content; align-self: flex-start; }
+
+        /* FOOTER */
+        .report-footer {
+            margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+        }
+        .footer-text { font-size: 0.82rem; color: var(--text-muted); }
+        .footer-text strong { color: var(--text-secondary); }
+        .footer-badges { display: flex; gap: 0.5rem; }
+
+        /* SCROLL REVEAL */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .page-wrapper { padding: 1.5rem 1rem 4rem; }
+            .card { padding: 1.5rem 1.25rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-orb orb-1" aria-hidden="true"></div>
+<div class="bg-orb orb-2" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav class="nav-bar" role="navigation" aria-label="Navegación principal">
+    <a class="nav-brand" href="#top">
+        <div class="nav-shield" aria-hidden="true">🛡️</div>
+        CyberSec Portfolio
+    </a>
+    <ul class="nav-links">
+        <li><a href="#evaluacion">Evaluación</a></li>
+        <li><a href="#escenario">Escenario</a></li>
+        <li><a href="#controles">Controles</a></li>
+        <li><a href="#remediacion">Remediación</a></li>
+    </ul>
+    <span class="nav-badge">NIST SP 800-30</span>
+</nav>
+
+<main class="page-wrapper" id="top">
+
+    <!-- HERO -->
+    <header class="hero reveal">
+        <div class="hero-eyebrow">Portafolio · Ciberseguridad Profesional</div>
+        <h1 class="hero-title">
+            Evaluación de <span>Controles de Acceso</span><br>y Gestión de Vulnerabilidades
+        </h1>
+        <p class="hero-desc">
+            Análisis integral de riesgos de seguridad bajo el marco <strong>NIST SP 800-30 Rev.1</strong>,
+            incluyendo investigación de incidente de acceso no autorizado, identificación de fallos en
+            controles de identidad y plan de remediación para infraestructura crítica.
+        </p>
+        <div class="hero-meta">
+            <div class="meta-chip"><span class="chip-label">Activo</span><strong>Servidor de Base de Datos</strong></div>
+            <div class="meta-chip"><span class="chip-label">Marco</span><strong>NIST SP 800-30 Rev.1</strong></div>
+            <div class="meta-chip"><span class="chip-label">Tipo</span><strong>Análisis Cualitativo</strong></div>
+            <div class="meta-chip"><span class="chip-label">Fecha</span><strong>Julio 2026</strong></div>
+        </div>
+    </header>
+
+    <!-- STATS -->
+    <div class="stats-strip reveal" aria-label="Resumen de riesgos">
+        <div class="stat-item critical"><div class="stat-value">1</div><div class="stat-label">Riesgo Crítico</div></div>
+        <div class="stat-item high">   <div class="stat-value">1</div><div class="stat-label">Riesgo Alto</div></div>
+        <div class="stat-item medium"> <div class="stat-value">1</div><div class="stat-label">Riesgo Medio</div></div>
+        <div class="stat-item total">  <div class="stat-value">4</div><div class="stat-label">Mitigaciones</div></div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider reveal"><span class="divider-label">Parte I — Evaluación de Vulnerabilidades</span></div>
+
+    <!-- CARD 01 — RESUMEN EJECUTIVO -->
+    <section id="evaluacion" class="card reveal" aria-labelledby="t1">
+        <div class="card-num" aria-hidden="true">01</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">📋</div>
+            <div>
+                <h2 class="card-title">Sección 1</h2>
+                <h3 class="card-subtitle" id="t1">Resumen Ejecutivo y Propósito</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            El presente informe tiene como objetivo principal identificar, cuantificar y analizar los riesgos
+            de seguridad asociados al servidor de base de datos corporativo. Este activo es de misión crítica,
+            ya que centraliza información confidencial del negocio y datos sensibles de clientes, operando
+            actualmente bajo un modelo de acceso remoto sin controles suficientes.
+        </p>
+        <p class="card-text">
+            La exposición pública prolongada de esta infraestructura genera una superficie de ataque ampliada.
+            Una vulneración podría resultar en pérdidas financieras, sanciones regulatorias y daño
+            irreversible a la reputación corporativa.
+        </p>
+        <div class="hbox hbox-orange" role="note">
+            <strong class="hbox-label">⚠ Alcance del análisis</strong>
+            Análisis realizado en el contexto del programa <strong>Google Cybersecurity Certificate</strong>.
+            Se aplican los controles del Marco NIST SP 800-30 Rev.1, con vectores de amenaza externos e internos.
+        </div>
+        <div class="tags">
+            <span class="tag">NIST-SP-800-30</span>
+            <span class="tag">RISK-ASSESSMENT</span>
+            <span class="tag">THREAT-MODELING</span>
+            <span class="tag">QUALITATIVE</span>
+        </div>
+    </section>
+
+    <!-- CARD 02 — METODOLOGÍA -->
+    <section class="card reveal" aria-labelledby="t2">
+        <div class="card-num" aria-hidden="true">02</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">🔬</div>
+            <div>
+                <h2 class="card-title">Sección 2</h2>
+                <h3 class="card-subtitle" id="t2">Metodología y Enfoque</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            Se adoptó un enfoque <strong>cualitativo</strong> fundamentado en las directrices de gestión de riesgos
+            del marco <strong>NIST SP 800-30 Rev.1</strong>. El modelo de amenazas contempla vectores externos
+            e internos, incluyendo actores maliciosos, competidores y amenazas internas con privilegios.
+        </p>
+        <div class="hbox hbox-blue">
+            <strong class="hbox-label">📐 Fórmula de Riesgo</strong>
+            <strong>Riesgo = Probabilidad × Impacto</strong> — Ambas variables se puntúan en escala 1 a 3
+            (Bajo / Medio / Alto). El resultado determina la prioridad de intervención.
+        </div>
+    </section>
+
+    <!-- CARD 03 — MATRIZ DE RIESGOS -->
+    <section class="card reveal" aria-labelledby="t3">
+        <div class="card-num" aria-hidden="true">03</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">⚡</div>
+            <div>
+                <h2 class="card-title">Sección 3</h2>
+                <h3 class="card-subtitle" id="t3">Matriz de Evaluación de Riesgos</h3>
+            </div>
+        </div>
+        <div class="tbl-wrap" role="region" aria-label="Tabla de riesgos">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Fuente de Amenaza</th>
+                        <th scope="col">Vector / Evento</th>
+                        <th scope="col" style="text-align:center">Probabilidad</th>
+                        <th scope="col" style="text-align:center">Impacto</th>
+                        <th scope="col">Nivel de Riesgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:600">🔴 Actor Externo (Hacker)</td>
+                        <td>Explotación de vulnerabilidades para acceso a la DB</td>
+                        <td class="td-mono c-orange">3</td>
+                        <td class="td-mono c-orange">3</td>
+                        <td><span class="badge badge-critical">9 — Crítico</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600">🟡 Competencia / Terceros</td>
+                        <td>Intercepción, robo o exfiltración de datos</td>
+                        <td class="td-mono c-yellow">2</td>
+                        <td class="td-mono c-orange">3</td>
+                        <td><span class="badge badge-high">6 — Alto</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600">🔵 Usuario Interno</td>
+                        <td>Abuso de privilegios o escalamiento de permisos</td>
+                        <td class="td-mono c-blue">2</td>
+                        <td class="td-mono c-blue">2</td>
+                        <td><span class="badge badge-medium">4 — Medio</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider reveal"><span class="divider-label">Parte II — Análisis de Controles de Acceso</span></div>
+
+    <!-- CARD 04 — ESCENARIO DEL INCIDENTE -->
+    <section id="escenario" class="card reveal" aria-labelledby="t4">
+        <div class="card-num" aria-hidden="true">04</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">🚨</div>
+            <div>
+                <h2 class="card-title">Sección 4</h2>
+                <h3 class="card-subtitle" id="t4">Descripción del Incidente</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            Se reportó un pago no autorizado desde los sistemas financieros de la empresa hacia una
+            <strong>cuenta bancaria desconocida</strong>. El Director Financiero confirmó que ningún
+            empleado autorizado realizó la transferencia. El pago fue detenido a tiempo, evitando pérdida
+            económica directa. Sin embargo, el incidente evidencia fallos graves en los controles de acceso.
+        </p>
+        <div class="hbox hbox-red">
+            <strong class="hbox-label">🚨 Clasificación del Incidente</strong>
+            Acceso no autorizado con intención de fraude financiero. Posible amenaza interna o credenciales
+            comprometidas de ex-empleado. Requiere investigación forense y acción inmediata.
+        </div>
+
+        <h4 style="color:#fff;font-size:0.85rem;font-weight:700;margin:1.5rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.06em;">
+            📜 Registro de Eventos (Access Log)
+        </h4>
+
+        <div class="timeline" role="list" aria-label="Línea de tiempo del incidente">
+            <div class="tl-item" role="listitem">
+                <div class="tl-meta">
+                    <span class="tl-time">2023-01-12 · 09:44 AM</span>
+                    <span class="badge badge-critical">Login Remoto</span>
+                </div>
+                <div class="tl-event">Inicio de sesión desde IP externa</div>
+                <div class="tl-detail">
+                    Usuario: <code>Legal/Administrator</code> — IP: <code>152.207.255.255</code> —
+                    Acceso desde ubicación geográfica fuera de la red corporativa.
+                </div>
+            </div>
+            <div class="tl-item" role="listitem">
+                <div class="tl-meta">
+                    <span class="tl-time">2023-01-12 · 09:48 AM</span>
+                    <span class="badge badge-high">Acceso a Nómina</span>
+                </div>
+                <div class="tl-event">Apertura del sistema de gestión de nómina</div>
+                <div class="tl-detail">
+                    Acceso al módulo de nómina con permisos de <code>Administrador</code>.
+                    Actividad inusual para el horario y perfil del rol legal.
+                </div>
+            </div>
+            <div class="tl-item" role="listitem">
+                <div class="tl-meta">
+                    <span class="tl-time">2023-01-12 · 09:52 AM</span>
+                    <span class="badge badge-critical">Modificación</span>
+                </div>
+                <div class="tl-event">Edición de datos bancarios en el sistema de pagos</div>
+                <div class="tl-detail">
+                    Se modificó el número de cuenta destino antes de procesar la transferencia.
+                    El cambio no requirió aprobación dual (ausencia de control de doble verificación).
+                </div>
+            </div>
+            <div class="tl-item" role="listitem">
+                <div class="tl-meta">
+                    <span class="tl-time">2023-01-12 · 09:55 AM</span>
+                    <span class="badge badge-high">Pago Procesado</span>
+                </div>
+                <div class="tl-event">Transferencia a cuenta bancaria desconocida</div>
+                <div class="tl-detail">
+                    El sistema ejecutó el pago sin alertas ni confirmaciones adicionales.
+                    El banco externo detuvo la transacción por actividad sospechosa.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARD 05 — ANÁLISIS DE PROBLEMAS -->
+    <section id="controles" class="card reveal" aria-labelledby="t5">
+        <div class="card-num" aria-hidden="true">05</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">🔍</div>
+            <div>
+                <h2 class="card-title">Sección 5</h2>
+                <h3 class="card-subtitle" id="t5">Identificación de Problemas en Controles de Acceso</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            Al cruzar el registro de eventos con el directorio de empleados, se detectaron anomalías críticas
+            que evidencian fallos sistémicos en la gestión de identidades y permisos de la organización.
+        </p>
+
+        <h4 style="color:#fff;font-size:0.85rem;font-weight:700;margin:1rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.06em;">
+            👥 Extracto del Directorio de Empleados
+        </h4>
+        <div class="tbl-wrap" role="region" aria-label="Directorio de empleados">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Cargo / Área</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Nivel de Acceso</th>
+                        <th scope="col">Observación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:600">Robert Taylor Jr.</td>
+                        <td>Contratista (ex-Legal)</td>
+                        <td><span class="badge badge-critical">Desvinculado</span></td>
+                        <td>Administrador</td>
+                        <td style="color:var(--accent-yellow);font-size:0.82rem">⚠️ Acceso no revocado</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600">Maria González</td>
+                        <td>Directora Financiera</td>
+                        <td><span class="badge badge-ok">Activa</span></td>
+                        <td>Administrador</td>
+                        <td style="color:var(--text-muted);font-size:0.82rem">Sin anomalías</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600">Carlos Vega</td>
+                        <td>Contador Junior</td>
+                        <td><span class="badge badge-ok">Activo</span></td>
+                        <td>Administrador</td>
+                        <td style="color:var(--accent-yellow);font-size:0.82rem">⚠️ Permisos excesivos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4 style="color:#fff;font-size:0.85rem;font-weight:700;margin:1.5rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.06em;">
+            🔎 Hallazgos — Problemas Detectados
+        </h4>
+
+        <div class="finding yellow">
+            <div class="finding-icon">🔑</div>
+            <div>
+                <div class="finding-title">Problema 1: Credenciales activas de usuario desvinculado</div>
+                <div class="finding-desc">
+                    El usuario que realizó el acceso es un ex-contratista del área Legal cuyas credenciales
+                    y permisos de Administrador nunca fueron revocados al momento de la desvinculación.
+                    Esto permitió el ingreso remoto desde una IP externa sin ninguna restricción.
+                </div>
+            </div>
+        </div>
+
+        <div class="finding red">
+            <div class="finding-icon">🔒</div>
+            <div>
+                <div class="finding-title">Problema 2: Violación del Principio de Mínimo Privilegio (PoLP)</div>
+                <div class="finding-desc">
+                    Todos los usuarios —incluidos contratistas y personal junior— comparten el mismo nivel
+                    de acceso de Administrador sobre los recursos en la unidad compartida en la nube.
+                    La ausencia de control RBAC amplifica el impacto de cualquier cuenta comprometida.
+                </div>
+            </div>
+        </div>
+
+        <div class="finding blue">
+            <div class="finding-icon">👁️</div>
+            <div>
+                <div class="finding-title">Hallazgo Adicional: Ausencia de monitoreo y alertas automáticas</div>
+                <div class="finding-desc">
+                    El sistema no generó alertas ante el acceso remoto inusual, los cambios en datos
+                    bancarios ni la transferencia fuera de patrón. La detección dependió del banco externo,
+                    no de los controles internos de la empresa.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARD 06 — HOJA DE TRABAJO -->
+    <section class="card reveal" aria-labelledby="t6">
+        <div class="card-num" aria-hidden="true">06</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">📊</div>
+            <div>
+                <h2 class="card-title">Sección 6</h2>
+                <h3 class="card-subtitle" id="t6">Hoja de Trabajo: Control de Acceso</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            Síntesis estructurada de la actividad de contabilización del incidente, alineada con la
+            plantilla del programa <strong>Google Cybersecurity Certificate</strong>.
+        </p>
+
+        <div class="worksheet" role="region" aria-label="Hoja de trabajo">
+            <div class="ws-col">
+                <div class="ws-head notes">📝 Notas del Registro</div>
+                <div class="ws-body">
+                    <div class="ws-item"><span class="ws-num">→</span><span>Acceso desde IP pública externa (<code>152.207.255.255</code>) el 12 de enero a las 9:44 AM</span></div>
+                    <div class="ws-item"><span class="ws-num">→</span><span>El perfil usado corresponde a un ex-contratista del área Legal ya desvinculado de la empresa</span></div>
+                    <div class="ws-item"><span class="ws-num">→</span><span>El acceso al sistema de nómina y la modificación bancaria ocurrieron en menos de 11 minutos</span></div>
+                </div>
+            </div>
+            <div class="ws-col">
+                <div class="ws-head issues">⚠️ Problemas Identificados</div>
+                <div class="ws-body">
+                    <div class="ws-item"><span class="ws-num">1.</span><span>No se revocaron credenciales del ex-contratista, manteniendo acceso activo de Administrador</span></div>
+                    <div class="ws-item"><span class="ws-num">2.</span><span>Los permisos no están segmentados por rol (RBAC): todos los usuarios tienen nivel Administrador sin distinción</span></div>
+                </div>
+            </div>
+            <div class="ws-col">
+                <div class="ws-head recs">✅ Recomendaciones</div>
+                <div class="ws-body">
+                    <div class="ws-item"><span class="ws-num">1.</span><span>Implementar procedimiento de <strong>offboarding</strong> con revocación de accesos el mismo día de la desvinculación</span></div>
+                    <div class="ws-item"><span class="ws-num">2.</span><span>Aplicar <strong>PoLP + RBAC</strong> para segmentar accesos según función y jerarquía</span></div>
+                    <div class="ws-item"><span class="ws-num">3.</span><span>Activar <strong>MFA</strong> para todos los accesos remotos y sistemas financieros</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider reveal"><span class="divider-label">Parte III — Plan de Remediación</span></div>
+
+    <!-- CARD 07 — REMEDIACIÓN -->
+    <section id="remediacion" class="card reveal" aria-labelledby="t7">
+        <div class="card-num" aria-hidden="true">07</div>
+        <div class="card-header">
+            <div class="card-icon" aria-hidden="true">🛡️</div>
+            <div>
+                <h2 class="card-title">Sección 7</h2>
+                <h3 class="card-subtitle" id="t7">Plan de Remediación y Mitigaciones</h3>
+            </div>
+        </div>
+        <p class="card-text">
+            Las siguientes medidas deben implementarse con carácter prioritario para cerrar las brechas
+            identificadas y reducir la probabilidad de recurrencia de este tipo de incidentes.
+        </p>
+
+        <ol class="rem-list" aria-label="Plan de remediación">
+            <li class="rem-item">
+                <div class="rem-num" aria-hidden="true">1</div>
+                <div>
+                    <div class="rem-title">Proceso de Offboarding con Revocación Inmediata de Accesos</div>
+                    <div class="rem-desc">Implementar un procedimiento documentado que garantice la revocación de todas las credenciales, tokens de sesión y permisos el mismo día de la desvinculación de cualquier empleado o contratista, sin excepción.</div>
+                </div>
+                <div class="rem-priority"><span class="badge badge-critical">Inmediato</span></div>
+            </li>
+            <li class="rem-item">
+                <div class="rem-num" aria-hidden="true">2</div>
+                <div>
+                    <div class="rem-title">Control de Acceso Basado en Roles (RBAC) y Mínimo Privilegio (PoLP)</div>
+                    <div class="rem-desc">Reestructurar la matriz de permisos segmentando el acceso a los recursos según la función de cada empleado. Los contratistas no deben tener permisos de Administrador salvo aprobación explícita con revisión periódica.</div>
+                </div>
+                <div class="rem-priority"><span class="badge badge-high">Alta Prioridad</span></div>
+            </li>
+            <li class="rem-item">
+                <div class="rem-num" aria-hidden="true">3</div>
+                <div>
+                    <div class="rem-title">Autenticación Multifactor (MFA) Obligatoria</div>
+                    <div class="rem-desc">Activar MFA para todos los accesos remotos y, en particular, para cualquier acción sobre sistemas financieros. El acceso remoto debe canalizarse exclusivamente a través de una VPN corporativa cifrada.</div>
+                </div>
+                <div class="rem-priority"><span class="badge badge-high">Alta Prioridad</span></div>
+            </li>
+            <li class="rem-item">
+                <div class="rem-num" aria-hidden="true">4</div>
+                <div>
+                    <div class="rem-title">Monitoreo Continuo, SIEM y Principio de Doble Verificación</div>
+                    <div class="rem-desc">Desplegar un sistema SIEM para detectar en tiempo real accesos desde IPs inusuales, cambios en datos bancarios de nómina o transferencias fuera del patrón histórico. Implementar aprobación dual (4-eyes principle) para pagos que superen umbrales definidos.</div>
+                </div>
+                <div class="rem-priority"><span class="badge badge-medium">Medio Plazo</span></div>
+            </li>
+        </ol>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="report-footer" role="contentinfo">
+        <div class="footer-text">
+            <strong>Portafolio de Ciberseguridad</strong> · Actividad práctica basada en el programa
+            <strong>Google Cybersecurity Certificate</strong> · Marco: NIST SP 800-30 Rev.1
+        </div>
+        <div class="footer-badges">
+            <span class="badge badge-info">Google Cert</span>
+            <span class="badge badge-ok">NIST Compliant</span>
+        </div>
+    </footer>
+
+</main>
+
+<script>
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // Stats counter animation
+    const statsObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const el = e.target;
+                const target = parseInt(el.textContent, 10);
+                if (isNaN(target)) return;
+                let current = 0;
+                const interval = setInterval(() => {
+                    current = Math.min(current + 1, target);
+                    el.textContent = current;
+                    if (current >= target) clearInterval(interval);
+                }, 80);
+                statsObs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-value').forEach(el => statsObs.observe(el));
+</script>
+</body>
+</html>
