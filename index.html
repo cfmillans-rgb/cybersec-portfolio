@@ -1409,6 +1409,178 @@
       color: var(--text-secondary);
       margin: 1.5rem 0 0.75rem;
     }
+
+    /* ============================================================
+       JOURNAL ENTRY
+    ============================================================ */
+    .journal-entry {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+    }
+
+    .journal-entry:hover {
+      border-color: var(--copper-border);
+      box-shadow: var(--shadow-md), var(--glow-copper);
+      transform: translateY(-2px);
+    }
+
+    .journal-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .journal-strip-item {
+      flex: 1;
+      min-width: 140px;
+      padding: 1rem 1.25rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .journal-strip-item:last-child { border-right: none; }
+
+    .journal-strip-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .journal-strip-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-white);
+    }
+
+    .journal-strip-value.mono {
+      font-family: var(--font-mono);
+      color: var(--copper-light);
+    }
+
+    .journal-body {
+      padding: 2rem 2.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .journal-body { padding: 1.5rem 1.25rem; }
+      .journal-strip-item { min-width: 50%; }
+    }
+
+    /* 5W Grid */
+    .five-w-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 640px) { .five-w-grid { grid-template-columns: 1fr; } }
+
+    .five-w-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 1.15rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .five-w-item:hover {
+      border-color: var(--copper-border);
+      transform: translateY(-2px);
+    }
+
+    .five-w-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .five-w-marker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+    }
+
+    .five-w-marker.who {
+      color: var(--copper-light);
+      background: var(--copper-dim);
+      border: 1px solid var(--copper-border);
+    }
+    .five-w-marker.what {
+      color: var(--rose);
+      background: var(--rose-dim);
+      border: 1px solid var(--rose-border);
+    }
+    .five-w-marker.when {
+      color: var(--steel);
+      background: var(--steel-dim);
+      border: 1px solid var(--steel-border);
+    }
+    .five-w-marker.where {
+      color: var(--sage);
+      background: var(--sage-dim);
+      border: 1px solid var(--sage-border);
+    }
+    .five-w-marker.why {
+      color: var(--amber);
+      background: var(--amber-dim);
+      border: 1px solid var(--amber-border);
+    }
+
+    .five-w-text {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .five-w-text strong {
+      color: var(--text-primary);
+    }
+
+    /* Journal checklist footer */
+    .journal-checklist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .check-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--sage);
+      background: var(--sage-dim);
+      border: 1px solid var(--sage-border);
+      border-radius: 9999px;
+      padding: 0.25rem 0.7rem;
+    }
+
+    .check-item::before {
+      content: '✓';
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -1440,7 +1612,8 @@
 
   <ul class="nav-links" id="nav-menu" role="list">
     <li><a href="#sobre-mi"><span class="icon">👤</span> Sobre mí</a></li>
-    <li><a href="#proyecto"><span class="icon">📁</span> Proyecto</a></li>
+    <li><a href="#proyecto"><span class="icon">📁</span> Project #1</a></li>
+    <li><a href="#proyecto-2"><span class="icon">📓</span> Project #2</a></li>
     <li><a href="#competencias"><span class="icon">⚙️</span> Skills</a></li>
     <li><a href="https://github.com/cfmillans-rgb" target="_blank" rel="noopener noreferrer"><span class="icon">🐙</span> GitHub</a></li>
     <li><a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer"><span class="icon">💼</span> LinkedIn</a></li>
@@ -2039,6 +2212,258 @@
     </article>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════
+       PROJECT #2 ── DIARIO DEL GESTOR DE INCIDENTES
+  ═══════════════════════════════════════════════════════ -->
+  <section id="proyecto-2" aria-labelledby="project2-title">
+    <div class="part-divider reveal">
+      <span class="part-label">Portfolio Project #2</span>
+    </div>
+
+    <!-- Project 2 Intro Card -->
+    <div class="card reveal" style="background: linear-gradient(135deg, rgba(107,140,174,0.06) 0%, rgba(192,139,92,0.04) 100%);">
+      <div class="card-ghost" aria-hidden="true">02</div>
+      <div class="project-flag">Portfolio Project #2</div>
+      <h2 class="card-title" id="project2-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-style: italic; margin-bottom: 0.5rem;">
+        Diario del Gestor de Incidentes — Ransomware en Clínica Sanitaria
+      </h2>
+      <p class="card-text">
+        Documentación forense de un incidente de ransomware en una clínica sanitaria estadounidense,
+        aplicando la metodología de las <strong>5 W</strong> (Who, What, When, Where, Why).
+        Actividad práctica del programa <strong>Google Cybersecurity Certificate</strong>.
+      </p>
+      <div class="tags">
+        <span class="tag">INCIDENT-RESPONSE</span>
+        <span class="tag">RANSOMWARE</span>
+        <span class="tag">PHISHING</span>
+        <span class="tag">MALWARE-ANALYSIS</span>
+        <span class="tag">5W-METHODOLOGY</span>
+        <span class="tag">GOOGLE-CERT</span>
+      </div>
+    </div>
+
+    <!-- Journal Entry -->
+    <div class="journal-entry reveal">
+
+      <!-- Top Metadata Strip -->
+      <div class="journal-strip">
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Fecha</span>
+          <span class="journal-strip-value mono">07 / 07 / 2026</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Entrada N°</span>
+          <span class="journal-strip-value mono">1</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Tipo de Incidente</span>
+          <span class="journal-strip-value">Ransomware · Phishing</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Sector Afectado</span>
+          <span class="journal-strip-value">Healthcare (EE.UU.)</span>
+        </div>
+      </div>
+
+      <!-- Journal Body -->
+      <div class="journal-body">
+
+        <!-- Description -->
+        <div class="card-header">
+          <div class="card-icon-wrap" aria-hidden="true">📓</div>
+          <div class="card-heading-group">
+            <p class="card-eyebrow">Descripción del Incidente</p>
+            <h3 class="card-title">Ataque de Ransomware a Clínica Sanitaria</h3>
+          </div>
+        </div>
+
+        <p class="card-text">
+          Se registró un incidente de seguridad crítico en una <strong>pequeña clínica sanitaria estadounidense</strong>
+          especializada en atención primaria. El ataque fue ejecutado mediante correos electrónicos de phishing
+          dirigidos que contenían archivos adjuntos maliciosos. Al ser descargados por varios empleados, el malware
+          se instaló en los equipos y permitió a los atacantes desplegar <strong>ransomware</strong>, cifrando archivos
+          críticos de la organización, incluyendo registros médicos de pacientes.
+        </p>
+        <p class="card-text">
+          Los atacantes dejaron una <strong>nota de rescate</strong> exigiendo una suma elevada de dinero a cambio de
+          la clave de descifrado. La clínica se vio obligada a detener operaciones, apagar sistemas y contactar
+          organizaciones externas para recibir asistencia técnica y reportar el incidente.
+        </p>
+
+        <div class="callout rose">
+          <div class="callout-icon">🚨</div>
+          <div>
+            <strong class="callout-label">Impacto Operacional</strong>
+            <div class="callout-body">
+              Interrupción total de operaciones. Los empleados no pudieron acceder a registros médicos,
+              sistemas de citas ni programas esenciales para la atención de pacientes. La clínica dejó
+              de funcionar por completo durante el incidente.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div class="callout steel" style="margin-top: 1rem;">
+          <div class="callout-icon">🔧</div>
+          <div>
+            <strong class="callout-label">Herramientas Utilizadas</strong>
+            <div class="callout-body">
+              Ninguna herramienta de ciberseguridad fue utilizada en esta fase inicial de documentación.
+              Esta entrada corresponde al registro forense del incidente previo al despliegue de herramientas
+              de respuesta. El análisis se centra en la contabilización mediante la metodología de las 5 W.
+            </div>
+          </div>
+        </div>
+
+        <!-- 5W Section -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">🔍 Las 5 W — Análisis Estructurado del Incidente</h4>
+
+        <div class="five-w-grid">
+          <!-- WHO -->
+          <div class="five-w-item">
+            <div class="five-w-marker who">👤 ¿Quién?</div>
+            <div class="five-w-text">
+              El incidente fue causado por un <strong>grupo organizado de ciberdelincuentes</strong> especializados
+              en atacar organizaciones de los sectores de salud y transporte. Son actores de amenaza sofisticados
+              que utilizan técnicas de ingeniería social dirigida (spear phishing) como vector de entrada inicial.
+            </div>
+          </div>
+
+          <!-- WHAT -->
+          <div class="five-w-item">
+            <div class="five-w-marker what">💥 ¿Qué?</div>
+            <div class="five-w-text">
+              Los empleados descargaron un <strong>archivo adjunto malicioso</strong> desde un correo electrónico
+              de phishing. Esto permitió la instalación de ransomware que <strong>cifró los archivos críticos</strong>
+              de la clínica — registros médicos, sistemas de citas y datos operacionales — impidiendo por completo
+              el acceso. Los atacantes dejaron una nota de rescate exigiendo un pago para entregar la clave de descifrado.
+            </div>
+          </div>
+
+          <!-- WHEN -->
+          <div class="five-w-item">
+            <div class="five-w-marker when">🕘 ¿Cuándo?</div>
+            <div class="five-w-text">
+              El incidente fue detectado un <strong>martes por la mañana, alrededor de las 9:00 AM</strong>,
+              cuando los empleados comenzaron a reportar que no podían acceder a sus archivos ni utilizar
+              sus equipos. La hora de inicio real del ataque podría ser anterior, considerando que el
+              malware pudo haber sido descargado previamente.
+            </div>
+          </div>
+
+          <!-- WHERE -->
+          <div class="five-w-item">
+            <div class="five-w-marker where">📍 ¿Dónde?</div>
+            <div class="five-w-text">
+              El ataque ocurrió en las instalaciones de una <strong>pequeña clínica sanitaria en Estados Unidos</strong>,
+              afectando toda la red interna de la organización. Los sistemas comprometidos incluyen estaciones
+              de trabajo de empleados, el servidor de archivos y los sistemas de gestión de registros médicos.
+            </div>
+          </div>
+
+          <!-- WHY (full width) -->
+          <div class="five-w-item full-width">
+            <div class="five-w-marker why">❓ ¿Por qué?</div>
+            <div class="five-w-text">
+              El incidente ocurrió porque los atacantes identificaron a la clínica como un <strong>objetivo vulnerable</strong>
+              dentro del sector salud — un sector frecuentemente atacado debido al alto valor de los datos médicos
+              y la urgencia operativa que presiona a las víctimas a pagar rescates. El vector de entrada fue un
+              <strong>correo de phishing dirigido</strong> (spear phishing) que explotó la falta de capacitación
+              en seguridad de los empleados. La ausencia de controles técnicos como filtros de correo avanzados,
+              sandboxing de adjuntos y segmentación de red facilitó la propagación del ransomware a toda la
+              infraestructura.
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">📝 Notas Adicionales</h4>
+
+        <div class="callout amber">
+          <div class="callout-icon">💡</div>
+          <div>
+            <strong class="callout-label">Observaciones y Preguntas para Investigación</strong>
+            <div class="callout-body">
+              Sería importante identificar con precisión <strong>cuántos empleados descargaron el archivo malicioso</strong>
+              y si el malware se propagó lateralmente o fue instalado de forma independiente en cada equipo.
+              También resulta crítico determinar si la clínica contaba con <strong>copias de seguridad offline</strong>
+              que permitan la restauración sin necesidad de pagar el rescate, y si existía algún plan de respuesta
+              a incidentes documentado previo al ataque. Adicionalmente, se recomienda evaluar si los datos de
+              pacientes fueron <strong>exfiltrados antes del cifrado</strong> (técnica de doble extorsión), lo cual
+              implicaría obligaciones regulatorias bajo HIPAA.
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Checklist -->
+        <div class="journal-checklist">
+          <span class="check-item">Fecha documentada</span>
+          <span class="check-item">Número de entrada</span>
+          <span class="check-item">Descripción completa</span>
+          <span class="check-item">Herramientas identificadas</span>
+          <span class="check-item">Las 5 W respondidas</span>
+          <span class="check-item">Notas adicionales</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Lessons from Project 2 -->
+    <article class="card reveal" aria-labelledby="p2-lessons-title">
+      <div class="card-ghost" aria-hidden="true">✧</div>
+      <div class="card-header">
+        <div class="card-icon-wrap" aria-hidden="true">💡</div>
+        <div class="card-heading-group">
+          <p class="card-eyebrow">Reflexión — Project #2</p>
+          <h3 class="card-title" id="p2-lessons-title">Lecciones del Incidente de Ransomware</h3>
+        </div>
+      </div>
+
+      <div class="lessons-grid">
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">01</div>
+          <div class="lesson-title">El eslabón humano sigue siendo el vector #1</div>
+          <div class="lesson-body">
+            El phishing dirigido fue el punto de entrada. Sin programas de concientización en seguridad
+            y simulacros de phishing periódicos, incluso los controles técnicos más avanzados pueden
+            ser eludidos por un solo clic de un empleado desinformado.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">02</div>
+          <div class="lesson-title">Los backups offline son la última línea de defensa</div>
+          <div class="lesson-body">
+            La capacidad de restaurar operaciones sin pagar rescate depende enteramente de la existencia
+            de copias de seguridad aisladas de la red (air-gapped). Sin backups verificados, una
+            organización queda a merced de los atacantes.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">03</div>
+          <div class="lesson-title">El sector salud requiere estándares de seguridad elevados</div>
+          <div class="lesson-body">
+            Los datos médicos tienen un valor excepcional en el mercado negro y están protegidos
+            por regulaciones estrictas como HIPAA. Las organizaciones de salud necesitan invertir
+            proporcionalmente en controles de ciberseguridad, no tratarlos como un gasto secundario.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">04</div>
+          <div class="lesson-title">Documentar es el primer paso para responder</div>
+          <div class="lesson-body">
+            El diario del gestor de incidentes no es burocracia: es una herramienta forense que
+            preserva evidencia, establece cronologías y alimenta la mejora continua del programa
+            de seguridad. La metodología 5W estructura el pensamiento cuando la presión es máxima.
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
   <!-- ── COMPETENCIAS ──────────────────────────────────────── -->
   <section id="competencias" aria-labelledby="skills-title">
     <div class="part-divider reveal">
@@ -2056,8 +2481,9 @@
       </div>
 
       <p class="card-text">
-        Las siguientes competencias fueron aplicadas directamente durante el desarrollo de este proyecto,
-        evidenciando capacidad de análisis técnico y pensamiento de seguridad estructurado.
+        Las siguientes competencias fueron aplicadas directamente en ambos proyectos del portafolio,
+        evidenciando capacidad de análisis técnico, pensamiento de seguridad estructurado y
+        documentación forense profesional.
       </p>
 
       <div class="skills-grid" role="list" aria-label="Listado de competencias">
@@ -2112,6 +2538,20 @@
         </div>
         <div class="skill-badge cat-tech" role="listitem">
           <span class="skill-dot" aria-hidden="true"></span>Python
+        </div>
+
+        <!-- From Project #2 -->
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>Malware Analysis
+        </div>
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>Phishing Detection
+        </div>
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>Forensic Documentation
+        </div>
+        <div class="skill-badge cat-risk" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>5W Methodology
         </div>
       </div>
 
