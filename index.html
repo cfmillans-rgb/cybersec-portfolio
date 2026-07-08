@@ -1614,6 +1614,7 @@
     <li><a href="#sobre-mi"><span class="icon">👤</span> Sobre mí</a></li>
     <li><a href="#proyecto"><span class="icon">📁</span> Project #1</a></li>
     <li><a href="#proyecto-2"><span class="icon">📓</span> Project #2</a></li>
+    <li><a href="#proyecto-3"><span class="icon">🛡️</span> Project #3</a></li>
     <li><a href="#certificaciones"><span class="icon">📜</span> Certs</a></li>
     <li><a href="#competencias"><span class="icon">⚙️</span> Skills</a></li>
     <li><a href="https://github.com/cfmillans-rgb" target="_blank" rel="noopener noreferrer"><span class="icon">🐙</span> GitHub</a></li>
@@ -1670,7 +1671,7 @@
       <div class="stat-label">Certificaciones</div>
     </div>
     <div class="stat-card c-rose">
-      <div class="stat-num" data-count="2">0</div>
+      <div class="stat-num" data-count="3">0</div>
       <div class="stat-label">Proyectos</div>
     </div>
     <div class="stat-card c-steel">
@@ -2466,6 +2467,251 @@
 
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════
+       PROJECT #3 ── SOC LEVEL 1 INCIDENT RESPONSE
+  ═══════════════════════════════════════════════════════ -->
+  <section id="proyecto-3" aria-labelledby="project3-title">
+    <div class="part-divider reveal">
+      <span class="part-label">Portfolio Project #3</span>
+    </div>
+
+    <!-- Project 3 Intro Card -->
+    <div class="card reveal" style="background: linear-gradient(135deg, rgba(122,158,138,0.06) 0%, rgba(107,140,174,0.04) 100%);">
+      <div class="card-ghost" aria-hidden="true">03</div>
+      <div class="project-flag" style="border-color: var(--sage-border); color: var(--sage); background: linear-gradient(135deg, rgba(122,158,138,0.15), rgba(107,140,174,0.10));">
+        Portfolio Project #3
+      </div>
+      <h2 class="card-title" id="project3-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-style: italic; margin-bottom: 0.5rem;">
+        Caso de Estudio | Respuesta a Incidentes SOC Nivel 1
+      </h2>
+      <p class="card-text">
+        Investigación de una alerta de phishing y escalado de incidentes asumiendo el rol de analista
+        SOC Nivel 1. Este proyecto práctico forma parte del programa <strong>Google Cybersecurity Certificate</strong>.
+      </p>
+      <div class="tags">
+        <span class="tag">INCIDENT-RESPONSE</span>
+        <span class="tag">PHISHING</span>
+        <span class="tag">SOC</span>
+        <span class="tag">THREAT-INTEL</span>
+        <span class="tag">IOC</span>
+        <span class="tag">GOOGLE-CERT</span>
+      </div>
+    </div>
+
+    <!-- Journal Entry Style -->
+    <div class="journal-entry reveal">
+
+      <!-- Top Metadata Strip -->
+      <div class="journal-strip">
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">ID del Ticket</span>
+          <span class="journal-strip-value mono">A-2703</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Alerta</span>
+          <span class="journal-strip-value">Posible intento de phishing (SERVER-MAIL)</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Gravedad</span>
+          <span class="journal-strip-value" style="color: var(--amber);">Media (Medium)</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Estado</span>
+          <span class="journal-strip-value" style="color: var(--rose);">Escalado</span>
+        </div>
+      </div>
+
+      <!-- Journal Body -->
+      <div class="journal-body">
+
+        <!-- Resumen Ejecutivo -->
+        <div class="card-header">
+          <div class="card-icon-wrap" aria-hidden="true">🛡️</div>
+          <div class="card-heading-group">
+            <p class="card-eyebrow">Resumen Ejecutivo</p>
+            <h3 class="card-title">Investigación de Phishing y Escalado</h3>
+          </div>
+        </div>
+
+        <p class="card-text">
+          Al desempeñar las funciones de analista de Nivel 1 del Centro de Operaciones de Seguridad (SOC),
+          investigué una alerta de phishing relacionada con un correo electrónico sospechoso que contenía un
+          archivo ejecutable malicioso adjunto. El hash del archivo adjunto coincidió con un indicador de
+          compromiso (IoC) malicioso conocido, lo que confirmó que el incidente era un ataque de phishing
+          legítimo. Siguiendo el Playbook de Phishing de la organización, la alerta se escaló al equipo
+          SOC de Nivel 2 para su contención y remediación.
+        </p>
+
+        <!-- Evidencia de la Alerta -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">🔎 Evidencia de la Alerta</h4>
+        <div class="worksheet" role="region" aria-label="Evidencia de la alerta">
+          <div class="ws-col" style="flex: 1 1 100%;">
+            <div class="ws-head issues">Detalles Técnicos Recopilados</div>
+            <div class="ws-body">
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>Hash SHA-256 (Malicioso):</strong> <code>54e6ea47eb04634d3e87fd7787e2136ccfbcc80ade34f246a12cf93bab527f6b</code></span>
+              </div>
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>Remitente:</strong> Def Communications &lt;76tguyhh6tgftrt7tg.su&gt;</span>
+              </div>
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>IP del Remitente:</strong> <code>114.114.114.114</code></span>
+              </div>
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>Destinatario:</strong> hr@inergy.com</span>
+              </div>
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>Asunto:</strong> Re: Infrastructure Egnieer role</span>
+              </div>
+              <div class="ws-item">
+                <span class="ws-bullet">→</span>
+                <span><strong>Archivo Adjunto:</strong> <code>bfsvc.exe</code> (protegido con contraseña)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Análisis y Observaciones -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">📊 Análisis y Observaciones</h4>
+        <ul style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; padding-left: 1.25rem;">
+          <li>Archivo adjunto ejecutable (<code>.exe</code>) entregado por correo electrónico.</li>
+          <li>Archivo adjunto protegido con contraseña para evadir el escaneo de seguridad del correo electrónico.</li>
+          <li>Asunto mal escrito y errores gramaticales que indican fuertemente phishing.</li>
+          <li>Remitente externo desconocido que se hace pasar por un solicitante de empleo legítimo.</li>
+          <li>Hash confirmado como malicioso utilizando fuentes de inteligencia de amenazas.</li>
+        </ul>
+
+        <!-- 5W Section -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">🔍 Las 5 W — Estructura del Incidente</h4>
+
+        <div class="five-w-grid">
+          <div class="five-w-item">
+            <div class="five-w-marker who">👤 ¿Quién?</div>
+            <div class="five-w-text">
+              Un <strong>actor de amenazas externo</strong> intentó comprometer la organización mediante un correo electrónico de phishing.
+            </div>
+          </div>
+
+          <div class="five-w-item">
+            <div class="five-w-marker what">💥 ¿Qué?</div>
+            <div class="five-w-text">
+              Se entregó un <strong>archivo ejecutable malicioso</strong> adjunto a un buzón del departamento de Recursos Humanos (HR).
+            </div>
+          </div>
+
+          <div class="five-w-item">
+            <div class="five-w-marker when">🕘 ¿Cuándo?</div>
+            <div class="five-w-text">
+              La alerta se generó <strong>después</strong> de que se recibió el correo electrónico y el sistema identificó el archivo adjunto.
+            </div>
+          </div>
+
+          <div class="five-w-item">
+            <div class="five-w-marker where">📍 ¿Dónde?</div>
+            <div class="five-w-text">
+              En el <strong>sistema de correo electrónico corporativo</strong> (SERVER-MAIL), dirigido específicamente a <code>hr@inergy.com</code>.
+            </div>
+          </div>
+
+          <div class="five-w-item full-width">
+            <div class="five-w-marker why">❓ ¿Por qué?</div>
+            <div class="five-w-text">
+              Para <strong>engañar al destinatario</strong> y lograr que ejecutara el malware, logrando así comprometer el endpoint y obtener acceso a la red interna.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ejecución del Playbook -->
+        <h4 class="sub-heading" style="margin-top: 2rem;">📋 Ejecución del Playbook de Phishing (v1.0)</h4>
+        
+        <div class="tbl-scroll" role="region" aria-label="Mapeo del playbook">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" style="width: 20%;">Paso del Playbook</th>
+                <th scope="col">Acción Realizada</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Paso 2</strong></td>
+                <td>Se evaluó la gravedad de la alerta, el remitente, el destinatario, el cuerpo del mensaje y el archivo adjunto.</td>
+              </tr>
+              <tr>
+                <td><strong>Paso 3.0</strong></td>
+                <td>Se confirmó que el correo electrónico contenía un archivo adjunto.</td>
+              </tr>
+              <tr>
+                <td><strong>Paso 3.1</strong></td>
+                <td>Se validó el hash del archivo utilizando inteligencia de amenazas y se confirmó que era malicioso.</td>
+              </tr>
+              <tr>
+                <td><strong>Paso 3.2</strong></td>
+                <td>Se actualizó el ticket a "Escalado" y se documentaron los hallazgos para el analista SOC de Nivel 2.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Comentario del Ticket -->
+        <div class="callout rose" style="margin-top: 2rem;">
+          <div class="callout-icon">📝</div>
+          <div>
+            <strong class="callout-label">Comentario Oficial del Ticket</strong>
+            <div class="callout-body">
+              "La investigación confirmó que el correo electrónico de phishing contenía un archivo ejecutable protegido con contraseña (<code>bfsvc.exe</code>). El hash SHA-256 coincidió con un archivo malicioso conocido, lo que validó la alerta como un verdadero positivo. El incidente fue escalado porque el archivo adjunto representa una amenaza de malware creíble y requiere la contención del endpoint, análisis forense e investigación adicional por parte del equipo SOC de Nivel 2."
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Lessons from Project 3 -->
+    <article class="card reveal" aria-labelledby="p3-lessons-title">
+      <div class="card-ghost" aria-hidden="true">✧</div>
+      <div class="card-header">
+        <div class="card-icon-wrap" aria-hidden="true">💡</div>
+        <div class="card-heading-group">
+          <p class="card-eyebrow">Reflexión — Project #3</p>
+          <h3 class="card-title" id="p3-lessons-title">Lecciones del Análisis de Phishing</h3>
+        </div>
+      </div>
+
+      <div class="lessons-grid">
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">01</div>
+          <div class="lesson-title">Evasión mediante protección con contraseña</div>
+          <div class="lesson-body">
+            Los atacantes utilizan con frecuencia archivos ejecutables protegidos con contraseña para evitar que los escáneres y filtros automáticos de correo electrónico analicen el contenido malicioso.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">02</div>
+          <div class="lesson-title">Importancia de la validación de IoC</div>
+          <div class="lesson-body">
+            La verificación proactiva de Indicadores de Compromiso (IoCs), como hashes de archivos, contra bases de datos de inteligencia de amenazas es crucial para confirmar los verdaderos positivos rápidamente.
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-num" aria-hidden="true">03</div>
+          <div class="lesson-title">Estandarización de la respuesta</div>
+          <div class="lesson-body">
+            Seguir un playbook de respuesta a incidentes documentado garantiza un manejo coherente, auditable y eficaz de las alertas de seguridad dentro de las operaciones del SOC.
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
   <!-- ── CERTIFICACIONES ──────────────────────────────────── -->
   <section id="certificaciones" aria-labelledby="certs-title">
     <div class="part-divider reveal">
@@ -2617,7 +2863,19 @@
           <span class="skill-dot" aria-hidden="true"></span>Incident Response
         </div>
 
-        <!-- Operations -->
+        <!-- Operations / SOC -->
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>Incident Triage
+        </div>
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>IOC Validation
+        </div>
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>Threat Intel Workflow
+        </div>
+        <div class="skill-badge cat-ops" role="listitem">
+          <span class="skill-dot" aria-hidden="true"></span>SOC Escalation
+        </div>
         <div class="skill-badge cat-ops" role="listitem">
           <span class="skill-dot" aria-hidden="true"></span>Log Analysis
         </div>
