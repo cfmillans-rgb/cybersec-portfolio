@@ -2228,19 +2228,19 @@
       <div class="card-ghost" aria-hidden="true">02</div>
       <div class="project-flag">Portfolio Project #2</div>
       <h2 class="card-title" id="project2-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-style: italic; margin-bottom: 0.5rem;">
-        Diario del Gestor de Incidentes — Ransomware en Clínica Sanitaria
+        Diario del Gestor de Incidentes — Ransomware & Análisis de Red
       </h2>
       <p class="card-text">
-        Documentación forense de un incidente de ransomware en una clínica sanitaria estadounidense,
-        aplicando la metodología de las <strong>5 W</strong> (Who, What, When, Where, Why).
-        Actividad práctica del programa <strong>Google Cybersecurity Certificate</strong>.
+        Documentación forense de un incidente de ransomware (metodología 5W), junto con bitácoras de aprendizaje
+        práctico sobre análisis de tráfico de red utilizando <strong>Wireshark</strong> y <strong>tcpdump</strong>.
+        Actividades prácticas del programa <strong>Google Cybersecurity Certificate</strong>.
       </p>
       <div class="tags">
         <span class="tag">INCIDENT-RESPONSE</span>
         <span class="tag">RANSOMWARE</span>
-        <span class="tag">PHISHING</span>
-        <span class="tag">MALWARE-ANALYSIS</span>
-        <span class="tag">5W-METHODOLOGY</span>
+        <span class="tag">NETWORK-ANALYSIS</span>
+        <span class="tag">WIRESHARK</span>
+        <span class="tag">TCPDUMP</span>
         <span class="tag">GOOGLE-CERT</span>
       </div>
     </div>
@@ -2411,55 +2411,151 @@
       </div>
     </div>
 
-    <!-- Lessons from Project 2 -->
-    <article class="card reveal" aria-labelledby="p2-lessons-title">
+    <!-- Journal Entry 2 -->
+    <div class="journal-entry reveal" style="margin-top: 3rem;">
+      <div class="journal-strip">
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Fecha</span>
+          <span class="journal-strip-value mono">25 / 07 / 2024</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Entrada N°</span>
+          <span class="journal-strip-value mono">2</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Actividad</span>
+          <span class="journal-strip-value">Análisis de Paquetes</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Herramienta</span>
+          <span class="journal-strip-value" style="color: var(--sage);">Wireshark (GUI)</span>
+        </div>
+      </div>
+
+      <div class="journal-body">
+        <div class="card-header">
+          <div class="card-icon-wrap" aria-hidden="true">🦈</div>
+          <div class="card-heading-group">
+            <p class="card-eyebrow">Descripción de la Actividad</p>
+            <h3 class="card-title">Analizando un Archivo de Captura de Paquetes</h3>
+          </div>
+        </div>
+
+        <p class="card-text">
+          Para esta actividad, utilicé <strong>Wireshark</strong> para analizar un archivo de captura de paquetes (pcap). 
+          Wireshark es un analizador de protocolos de red que utiliza una interfaz gráfica de usuario (GUI). Su valor 
+          en ciberseguridad radica en que permite a los analistas de seguridad capturar e inspeccionar el tráfico de red 
+          a un nivel muy granular, lo cual es fundamental para detectar e investigar actividades maliciosas.
+        </p>
+
+        <h4 class="sub-heading" style="margin-top: 2rem;">📝 Notas Adicionales</h4>
+        <div class="callout sage">
+          <div class="callout-icon">💭</div>
+          <div>
+            <strong class="callout-label">Primera Impresión</strong>
+            <div class="callout-body">
+              Nunca antes había utilizado Wireshark, así que estaba emocionada por comenzar este ejercicio. A primera vista, 
+              la interfaz me resultó bastante abrumadora por la cantidad de datos que muestra simultáneamente. Sin embargo, 
+              rápidamente pude entender por qué es una herramienta tan poderosa y estándar en la industria para comprender 
+              el flujo de tráfico de red.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journal Entry 3 -->
+    <div class="journal-entry reveal" style="margin-top: 3rem;">
+      <div class="journal-strip">
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Fecha</span>
+          <span class="journal-strip-value mono">25 / 07 / 2024</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Entrada N°</span>
+          <span class="journal-strip-value mono">3</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Actividad</span>
+          <span class="journal-strip-value">Captura de Tráfico</span>
+        </div>
+        <div class="journal-strip-item">
+          <span class="journal-strip-label">Herramienta</span>
+          <span class="journal-strip-value" style="color: var(--amber);">tcpdump (CLI)</span>
+        </div>
+      </div>
+
+      <div class="journal-body">
+        <div class="card-header">
+          <div class="card-icon-wrap" aria-hidden="true">⌨️</div>
+          <div class="card-heading-group">
+            <p class="card-eyebrow">Descripción de la Actividad</p>
+            <h3 class="card-title">Capturando mi Primer Paquete</h3>
+          </div>
+        </div>
+
+        <p class="card-text">
+          Para esta actividad, utilicé <strong>tcpdump</strong> para capturar y analizar tráfico de red. A diferencia de 
+          Wireshark, tcpdump es un analizador de protocolos de red al que se accede mediante la interfaz de línea de 
+          comandos (CLI). Comparte el mismo valor fundamental: permite a los analistas de seguridad capturar, filtrar 
+          y analizar el tráfico de red de manera eficiente, especialmente en entornos de servidores sin interfaz gráfica.
+        </p>
+
+        <h4 class="sub-heading" style="margin-top: 2rem;">📝 Notas Adicionales</h4>
+        <div class="callout amber">
+          <div class="callout-icon">🧗‍♀️</div>
+          <div>
+            <strong class="callout-label">Desafío Superado</strong>
+            <div class="callout-body">
+              Aún soy nueva utilizando la interfaz de línea de comandos, por lo que usarla para capturar y filtrar 
+              tráfico fue todo un desafío. Me quedé atascada un par de veces por usar comandos incorrectos. Sin embargo, 
+              después de leer cuidadosamente las instrucciones y rehacer algunos pasos, logré completar la actividad y 
+              capturar el tráfico de red exitosamente.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lessons / Reflections from Project 2 -->
+    <article class="card reveal" aria-labelledby="p2-lessons-title" style="margin-top: 3rem;">
       <div class="card-ghost" aria-hidden="true">✧</div>
       <div class="card-header">
         <div class="card-icon-wrap" aria-hidden="true">💡</div>
         <div class="card-heading-group">
-          <p class="card-eyebrow">Reflexión — Project #2</p>
-          <h3 class="card-title" id="p2-lessons-title">Lecciones del Incidente de Ransomware</h3>
+          <p class="card-eyebrow">Reflexión del Módulo</p>
+          <h3 class="card-title" id="p2-lessons-title">Evolución y Desafíos en Detección de Incidentes</h3>
         </div>
       </div>
 
       <div class="lessons-grid">
         <div class="lesson-card">
           <div class="lesson-num" aria-hidden="true">01</div>
-          <div class="lesson-title">El eslabón humano sigue siendo el vector #1</div>
+          <div class="lesson-title">La Curva de Aprendizaje de la CLI (tcpdump)</div>
           <div class="lesson-body">
-            El phishing dirigido fue el punto de entrada. Sin programas de concientización en seguridad
-            y simulacros de phishing periódicos, incluso los controles técnicos más avanzados pueden
-            ser eludidos por un solo clic de un empleado desinformado.
+            Encontré la actividad con tcpdump genuinamente desafiante. Aprender la sintaxis para una herramienta 
+            de línea de comandos supuso una gran curva de aprendizaje y al principio sentí frustración al no obtener 
+            el resultado esperado. Aprendí que la clave es leer la documentación cuidadosamente y avanzar paso a paso.
           </div>
         </div>
 
         <div class="lesson-card">
           <div class="lesson-num" aria-hidden="true">02</div>
-          <div class="lesson-title">Los backups offline son la última línea de defensa</div>
+          <div class="lesson-title">Comprensión de la Detección y Respuesta</div>
           <div class="lesson-body">
-            La capacidad de restaurar operaciones sin pagar rescate depende enteramente de la existencia
-            de copias de seguridad aisladas de la red (air-gapped). Sin backups verificados, una
-            organización queda a merced de los atacantes.
+            Mi comprensión evolucionó drásticamente. Al inicio, entendía lo básico, pero no la enorme complejidad 
+            involucrada. A lo largo del curso aprendí sobre el ciclo de vida de un incidente, y la importancia crítica 
+            de alinear <strong>planes, procesos, personas y herramientas</strong>.
           </div>
         </div>
 
         <div class="lesson-card">
           <div class="lesson-num" aria-hidden="true">03</div>
-          <div class="lesson-title">El sector salud requiere estándares de seguridad elevados</div>
+          <div class="lesson-title">Fascinación por el Análisis de Red</div>
           <div class="lesson-body">
-            Los datos médicos tienen un valor excepcional en el mercado negro y están protegidos
-            por regulaciones estrictas como HIPAA. Las organizaciones de salud necesitan invertir
-            proporcionalmente en controles de ciberseguridad, no tratarlos como un gasto secundario.
-          </div>
-        </div>
-
-        <div class="lesson-card">
-          <div class="lesson-num" aria-hidden="true">04</div>
-          <div class="lesson-title">Documentar es el primer paso para responder</div>
-          <div class="lesson-body">
-            El diario del gestor de incidentes no es burocracia: es una herramienta forense que
-            preserva evidencia, establece cronologías y alimenta la mejora continua del programa
-            de seguridad. La metodología 5W estructura el pensamiento cuando la presión es máxima.
+            Lo que más disfruté fue el análisis de tráfico de red utilizando analizadores de protocolos. Fue mi primera 
+            vez interactuando con estas herramientas y me resultó fascinante capturar y diseccionar tráfico en tiempo real. 
+            Me ha despertado un gran interés por seguir perfeccionando estas habilidades técnicas.
           </div>
         </div>
       </div>
